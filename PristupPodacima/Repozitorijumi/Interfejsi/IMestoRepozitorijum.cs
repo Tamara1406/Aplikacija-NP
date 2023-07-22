@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace PristupPodacima.Repozitorijumi.Interfejsi
 {
+    /// <summary>
+    /// Interfejs repozitorijuma mesta koji nasledjuje IRepozitorijum sa parametrom Mesto
+    /// 
+    /// @author Tamara Maksimovic
+    /// 
+    /// </summary>
     public interface IMestoRepozitorijum : IRepozitorijum<Mesto>
     {
     }
