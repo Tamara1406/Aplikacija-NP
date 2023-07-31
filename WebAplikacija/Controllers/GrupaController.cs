@@ -9,14 +9,33 @@ using WebAplikacija.Models;
 
 namespace WebAplikacija.Controllers
 {
+    /// <summary>
+    /// Predstavlja klasu koja upravlja stranicama o grupama .
+    /// 
+    /// Nasledjuje klasu Controller.
+    /// 
+    /// @author Tamara Maksimovic
+    /// 
+    /// </summary>
     public class GrupaController : Controller
     {
+        /// <summary>
+        /// Predstavlja jedinincu posla koja upravlja repozitorijumima.
+        /// </summary>
         private readonly IJedinicaPosla jedinicaPosla;
+        /// <summary>
+        /// Konstruktor kojim se dodeljuje vrednost jedinici posla.
+        /// </summary>
+        /// <param name="jedinicaPosla">Jedinica posla koja upravlja repozitorijumima</param>
         public GrupaController(IJedinicaPosla jedinicaPosla)
         {
             this.jedinicaPosla = jedinicaPosla;
         }
 
+        /// <summary>
+        /// Metoda koja vraca stranicu sa listom svih grupa koje postoje u teretani.
+        /// </summary>
+        /// <returns>stranica sa listom grupa</returns>
         public IActionResult Index()
         {
             List<GrupaViewModel> model = jedinicaPosla
@@ -32,6 +51,13 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja vraca stranicu sa listom svih grupa koje postoje u teretani.
+        /// 
+        /// Pristup stranici imaju samo admini i treneri.
+        /// 
+        /// </summary>
+        /// <returns>stranica sa listom grupa</returns>
         [Authorize(Roles ="Admin, Trener")]
         public IActionResult IndexAdmin()
         {
@@ -49,6 +75,13 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja vraca stranicu na kojoj se pretrazuju grupe prema kriterijumu.
+        /// 
+        /// Kriterijum za pretragu je naziv grupe.
+        /// </summary>
+        /// <param name="naziv">naziv grupe kao string</param>
+        /// <returns>stranica za pretragu grupa</returns>
         public IActionResult Pretrazi(string naziv)
         {
             List<PretraziGrupuViewModel> model = jedinicaPosla
@@ -75,7 +108,13 @@ namespace WebAplikacija.Controllers
             return View(nova);
         }
 
-
+        /// <summary>
+        /// Metoda koja vraca stranicu na kojoj se pretrazuju grupe prema treneru koji trenira grupu.
+        /// 
+        /// Kriterijum za pretragu je ime trenera.
+        /// </summary>
+        /// <param name="trener">ime trenera grupe kao string</param>
+        /// <returns>stranica za pretragu grupe</returns>
         public IActionResult PretraziTrener(int trener)
         {
             List<PretraziGrupuViewModel> model = jedinicaPosla
@@ -102,6 +141,13 @@ namespace WebAplikacija.Controllers
             return View(nova);
         }
 
+        /// <summary>
+        /// Metoda koja vraca stranicu na kojoj se kreira nova grupa.
+        /// 
+        /// Kreiranje nove grupe je dostupno samo adminima ili trenerima.
+        /// 
+        /// </summary>
+        /// <returns>stranica za kreiranje grupe</returns>
         [Authorize(Roles = "Admin,Trener")]
         public async Task<IActionResult> Kreiraj()
         {
@@ -125,6 +171,11 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja prikuplja unete podatke o grupi i poziva metodu za kreiranje nove grupe.
+        /// </summary>
+        /// <param name="grupa">nova grupa koja se unosi u bazu</param>
+        /// <returns>metoda za kreiranje grupe</returns>
         [HttpPost]
         public async Task<IActionResult> Kreiraj(KreirajGrupuViewModel grupa)
         {
@@ -143,7 +194,13 @@ namespace WebAplikacija.Controllers
             return await Kreiraj();
         }
 
-
+        /// <summary>
+        /// Metoda koja vraca stranicu za brisanje neke grupe iz baze podataka.
+        /// 
+        /// Stranici za brisanje mogu da pristupe samo admini i treneri.
+        /// </summary>
+        /// <param name="id">id grupe koja treba da se obrise</param>
+        /// <returns>stranica za brisanje grupe</returns>
         [Authorize(Roles = "Admin, Trener")]
         public IActionResult Obrisi(int id)
         {
@@ -168,6 +225,11 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja salje zahtev za brisanje grupe.
+        /// </summary>
+        /// <param name="model">model grupe koja treba da se obrise</param>
+        /// <returns>vraca pocetnu stranicu za prikaz svih grupa</returns>
         [HttpPost]
         public IActionResult Obrisi(ObrisiGrupuViewModel model)
         {

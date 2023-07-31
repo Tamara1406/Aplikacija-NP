@@ -8,15 +8,34 @@ using WebAplikacija.Models;
 
 namespace WebAplikacija.Controllers
 {
+    /// <summary>
+    /// Predstavlja klasu koja upravlja stranicama o trenerima .
+    /// 
+    /// Nasledjuje klasu Controller.
+    /// 
+    /// @author Tamara Maksimovic
+    /// 
+    /// </summary>
     public class TrenerController : Controller
     {
+        /// <summary>
+        /// Predstavlja jedinincu posla koja upravlja repozitorijumima.
+        /// </summary>
         private readonly IJedinicaPosla jedinicaPosla;
 
+        /// <summary>
+        /// Konstruktor kojim se dodeljuje vrednost jedinici posla.
+        /// </summary>
+        /// <param name="jedinicaPosla">Jedinica posla koja upravlja repozitorijumima</param>
         public TrenerController(IJedinicaPosla jedinicaPosla)
         {
             this.jedinicaPosla = jedinicaPosla;
         }
-    
+
+        /// <summary>
+        /// Metoda koja vraca stranicu sa listom svih terenra koji rade u teretani.
+        /// </summary>
+        /// <returns>stranica sa listom trenera</returns>
         public IActionResult Index()
         {
             List<TrenerViewModel> model = jedinicaPosla
@@ -36,6 +55,13 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja vraca stranicu sa listom svih trenera koji rade u teretani.
+        /// 
+        /// Pristup stranici imaju samo admini i treneri.
+        /// 
+        /// </summary>
+        /// <returns>stranica sa listom trenera</returns>
         [Authorize(Roles = "Admin, Trener")]
         public IActionResult IndexAdmin()
         {
@@ -55,6 +81,13 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja vraca stranicu na kojoj se kreira novi trener.
+        /// 
+        /// Pristup stranici imaju samo admini.
+        /// 
+        /// </summary>
+        /// <returns>stranica za kreiranje trenera</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Kreiraj()
         {
@@ -71,6 +104,11 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja prikuplja unete podatke o treneru i poziva metodu za kreiranje novog trenera.
+        /// </summary>
+        /// <param name="trener">novi trener koji se unosi u bazu</param>
+        /// <returns>metoda za kreiranje trenera</returns>
         [HttpPost]
         public async Task<IActionResult> Kreiraj(KreirajTreneraViewModel trener)
         {
@@ -92,7 +130,13 @@ namespace WebAplikacija.Controllers
             return await Kreiraj();
         }
 
-
+        /// <summary>
+        /// Metoda koja vraca stranicu na kojoj se menjaju podaci o treneru.
+        /// 
+        /// Stranici za promenu podataka o treneru moze da pristupi samo admin.
+        /// </summary>
+        /// <param name="id">id trenera ciji podaci se menjaju</param>
+        /// <returns>stranica za izmenu podataka o treneru</returns>
         [Authorize(Roles = "Admin")]
         public IActionResult Promeni(int id)
         {
@@ -122,6 +166,11 @@ namespace WebAplikacija.Controllers
             return View(tr);
         }
 
+        /// <summary>
+        /// Metoda koja prikuplja unete podatke o treneru i poziva metodu za izmenu podataka o tom treneru.
+        /// </summary>
+        /// <param name="model">model trenera kome se menjaju podaci</param>
+        /// <returns>listu svih trenera ili stranicu za izmenu podataka</returns>
         [HttpPost]
         public IActionResult Promeni(PromeniTreneraViewModel model)
         {
@@ -144,7 +193,13 @@ namespace WebAplikacija.Controllers
             return Promeni(model.TrenerID);
         }
 
-
+        /// <summary>
+        /// Metoda koja vraca stranicu za brisanje nekog trenera iz baze podataka.
+        /// 
+        /// Stranici za brisanje trenera mogu da pristupe samo admini.
+        /// </summary>
+        /// <param name="id">id trenera koji treba da se obrise</param>
+        /// <returns>stranica za brisanje trenera</returns>
         [Authorize(Roles = "Admin")]
         public IActionResult Obrisi(int id)
         {
@@ -170,6 +225,11 @@ namespace WebAplikacija.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Metoda koja salje zahtev za brisanje trenera.
+        /// </summary>
+        /// <param name="model">model trenera koji treba da se obrise</param>
+        /// <returns>vraca pocetnu stranicu za prikaz svih trenera</returns>
         [HttpPost]
         public IActionResult Obrisi(ObrisiTreneraViewModel model)
         {
@@ -193,7 +253,13 @@ namespace WebAplikacija.Controllers
             return RedirectToAction("Index");
         }
 
-
+        /// <summary>
+        /// Metoda koja vraca stranicu na kojoj se pretrazuju treneri prema imenu i prezimenu.
+        /// 
+        /// Kriterijum za pretragu je ime i prezime trenera.
+        /// </summary>
+        /// <param name="imePrezime">ime i prezime trenera kao string</param>
+        /// <returns>stranica za pretragu trenera ili za prikaz svih trenera</returns>
         public async Task<IActionResult> Pretrazi(string imePrezime)
         {
             List<PretraziTreneraViewModel> model = jedinicaPosla
