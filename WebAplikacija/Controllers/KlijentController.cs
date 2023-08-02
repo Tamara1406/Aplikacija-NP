@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NuGet.Protocol;
 using PristupPodacima.Jedinica_Posla;
 using WebAplikacija.Models;
+using System;
+using System.IO;
+using System.Text.Json;
 
 namespace WebAplikacija.Controllers
 {
@@ -60,6 +63,14 @@ namespace WebAplikacija.Controllers
 
                 })
                 .ToList();
+
+            string fileName = "Klijenti.txt";
+            string jsonString = JsonSerializer.Serialize(model);
+
+            using (StreamWriter streamWriter = new StreamWriter(fileName))
+            {
+                await streamWriter.WriteAsync(jsonString);
+            }
             return View(model);
         }
 
@@ -104,7 +115,6 @@ namespace WebAplikacija.Controllers
                     Value = p.PolID.ToString()
                 })
                 .ToList();
-            
             return View(model);
         }
 
@@ -137,6 +147,9 @@ namespace WebAplikacija.Controllers
                     PolID = klijent.PolID,
                     GrupaID = klijent.GrupaID
                 };
+
+
+                
                 jedinicaPosla.KlijentRepozitorijum.Dodaj(k);
                 jedinicaPosla.SacuvajPromene();
                 return RedirectToAction("Index");

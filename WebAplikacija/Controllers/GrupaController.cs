@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NuGet.Versioning;
 using PristupPodacima.Jedinica_Posla;
 using System.Data;
+using System.Text.Json;
 using WebAplikacija.Models;
 
 namespace WebAplikacija.Controllers
@@ -36,7 +36,7 @@ namespace WebAplikacija.Controllers
         /// Metoda koja vraca stranicu sa listom svih grupa koje postoje u teretani.
         /// </summary>
         /// <returns>stranica sa listom grupa</returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             List<GrupaViewModel> model = jedinicaPosla
                 .GrupaRepozitorijum
@@ -48,6 +48,8 @@ namespace WebAplikacija.Controllers
                     Mesto = g.Mesto.Naziv
                 })
                 .ToList();
+
+            
             return View(model);
         }
 
@@ -59,7 +61,7 @@ namespace WebAplikacija.Controllers
         /// </summary>
         /// <returns>stranica sa listom grupa</returns>
         [Authorize(Roles ="Admin, Trener")]
-        public IActionResult IndexAdmin()
+        public async Task<IActionResult> IndexAdmin()
         {
             List<GrupaViewModel> model = jedinicaPosla
                 .GrupaRepozitorijum
@@ -72,6 +74,14 @@ namespace WebAplikacija.Controllers
                     Mesto = g.Mesto.Naziv
                 })
                 .ToList();
+
+            string fileName = "Grupe.txt";
+            string jsonString = JsonSerializer.Serialize(model);
+
+            using (StreamWriter streamWriter = new StreamWriter(fileName))
+            {
+                await streamWriter.WriteAsync(jsonString);
+            }
             return View(model);
         }
 

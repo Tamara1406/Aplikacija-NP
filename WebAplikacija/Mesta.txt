@@ -1,0 +1,1 @@
+[{"MestoID":1,"Naziv":"Batajnica"},{"MestoID":2,"Naziv":"Beograd"},{"MestoID":3,"Naziv":"Novi Sad"}]

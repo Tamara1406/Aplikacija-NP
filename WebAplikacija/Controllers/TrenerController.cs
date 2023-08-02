@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PristupPodacima.Jedinica_Posla;
+using System.Text.Json;
 using WebAplikacija.Models;
 
 namespace WebAplikacija.Controllers
@@ -36,7 +37,7 @@ namespace WebAplikacija.Controllers
         /// Metoda koja vraca stranicu sa listom svih terenra koji rade u teretani.
         /// </summary>
         /// <returns>stranica sa listom trenera</returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             List<TrenerViewModel> model = jedinicaPosla
                 .TrenerRepozitorijum
@@ -52,6 +53,14 @@ namespace WebAplikacija.Controllers
                     Slika = t.Slika
                 })
                 .ToList();
+
+            string fileName = "Treneri.txt";
+            string jsonString = JsonSerializer.Serialize(model);
+
+            using (StreamWriter streamWriter = new StreamWriter(fileName))
+            {
+                await streamWriter.WriteAsync(jsonString);
+            }
             return View(model);
         }
 
