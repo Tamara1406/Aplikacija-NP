@@ -1,0 +1,19 @@
+﻿@model List<TerminViewModel>
+<table style=" text-align: center;">
+    <thead>
+        <tr>
+            <th>Grupe</th>
+            <th>Termini po grupama</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Grupa</td>
+                <td>@item.VremeTermina</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

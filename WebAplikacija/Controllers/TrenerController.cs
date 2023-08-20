@@ -72,7 +72,7 @@ namespace WebAplikacija.Controllers
         /// </summary>
         /// <returns>stranica sa listom trenera</returns>
         [Authorize(Roles = "Admin, Trener")]
-        public IActionResult IndexAdmin()
+        public async Task<IActionResult> IndexAdmin()
         {
             List<TrenerViewModel> model = jedinicaPosla
                 .TrenerRepozitorijum
