@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,18 +20,45 @@ namespace Domen
         /// <summary>
         /// Id termina kao int.
         /// </summary>
-        public int TerminID { get; set; }
+        private int terminID;
+        public int TerminID
+        {
+            get { return terminID; }
+            set {
+                if (value == null)
+                    throw new ArgumentNullException("Vrednost ID-ja je null!");
+                terminID = value; }
+        }
         /// <summary>
         /// Vreme u kom se odrzava termin kao DateTime
         /// </summary>
-        public DateTime VremeTermina { get; set; }
+        private DateTime vremeTermina;
+        public DateTime VremeTermina
+        {
+            get { return vremeTermina; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("Morate uneti vrednost za vreme termina!");
+                vremeTermina = value; }
+        }
         /// <summary>
         /// Grupa koja trenira u ovom terminu.
         /// </summary>
-        public Grupa? Grupa { get; set; }
+        private Grupa? grupa;
+        public Grupa? Grupa
+        {
+            get { return grupa; }
+            set { grupa = value; }
+        }
         /// <summary>
         /// Id grupe koja trenira u ovom terminu.
         /// </summary>
-        public int GrupaID { get; set; }
+        private int grupaID;
+        public int GrupaID
+        {
+            get { return grupaID; }
+            set { grupaID = value; }
+        }
     }
 }

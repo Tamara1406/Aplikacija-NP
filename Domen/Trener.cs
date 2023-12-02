@@ -19,23 +19,68 @@ namespace Domen
         /// <summary>
         /// Id trenera kao int.
         /// </summary>
-        public int TrenerID { get; set; }
+        private int trenerID;
+        public int TrenerID
+        {
+            get { return trenerID; }
+            set {
+                if (value == null)
+                    throw new ArgumentNullException("Vrednost ID-ja je null!");
+                trenerID = value; 
+            }
+        }
         /// <summary>
         /// Ime trenera kao string.
         /// </summary>
-        public string Ime { get; set; }
+        private string ime;
+        public string Ime
+        {
+            get { return ime; }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    throw new ArgumentNullException("Morate uneti vrednost za ime!");
+                if (value.Length > 20)
+                    throw new ArgumentException("Ime je ograniceno na 20 karaktera!");
+                ime = value; }
+        }
         /// <summary>
         /// Prezime treneras kao string.
         /// </summary>
-        public string Prezime { get; set; }
+        private string prezime;
+        public string Prezime
+        {
+            get { return prezime; }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    throw new ArgumentNullException("Morate uneti vrednost za prezime!");
+                if (value.Length > 30)
+                    throw new ArgumentException("Prezime je ograniceno na 30 karaktera!");
+                prezime = value; }
+        }
         /// <summary>
         /// Obrazovanje trenera koji radi u teretani.
         /// </summary>
-        public Obrazovanje Obrazovanje { get; set; }
+        private Obrazovanje obrazovanje;
+        public Obrazovanje Obrazovanje
+        {
+            get { return obrazovanje; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("Morate uneti vrednost za obrazovanje!");
+                obrazovanje = value; }
+        }
         /// <summary>
         /// Id obrazovanja trenera.
         /// </summary>
-        public int ObrazovanjeID { get; set; }
+        private int obrazovanjeID;
+        public int ObrazovanjeID
+        {
+            get { return obrazovanjeID; }
+            set { obrazovanjeID = value; }
+        }
         /// <summary>
         /// Get metoda koja vraca ime i prezime trenera.
         /// </summary>
@@ -46,10 +91,26 @@ namespace Domen
         /// <summary>
         /// Opis trenera kao string.
         /// </summary>
-        public string Opis { get; set; }
+        private string opis;
+        public string Opis
+        {
+            get { return opis; }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    throw new ArgumentNullException("Morate uneti opis!");
+                if (value.Length > 50)
+                    throw new ArgumentException("Opis je ogranicen na 50 karaktera!");
+                opis = value; }
+        }
         /// <summary>
         /// Slika trenera kao string koji sadrzi adresu slike.
         /// </summary>
-        public string? Slika { get; set; }
+        private string? slika;
+        public string? Slika
+        {
+            get { return slika; }
+            set { slika = value; }
+        }
     }
 }

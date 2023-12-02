@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Domen
@@ -19,39 +21,109 @@ namespace Domen
         /// <summary>
         /// Id klijenta koji trenira u teretani.
         /// </summary>
-        public int KlijentID { get; set; }
+        private int klijentID;
+        public int KlijentID
+        {
+            get { return klijentID; }
+            set {
+                if (value == null)
+                    throw new ArgumentNullException("Vrednost ID-ja je null!");
+                klijentID = value; }
+        }
         /// <summary>
         /// Ime klijenta koji trenira u teretani.
         /// </summary>
-        public string Ime { get; set; }
+        private string ime;
+        public string Ime
+        {
+            get { return ime; }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    throw new ArgumentNullException("Morate uneti vrednost za ime!");
+                if (value.Length > 20)
+                    throw new ArgumentException("Ime je ograniceno na 20 karaktera!"); 
+                ime = value; 
+            }
+        }
         /// <summary>
         /// Prezime klijenta koji trenira u teretani.
         /// </summary>
-        public string Prezime { get; set; }
+        private string prezime;
+        public string Prezime
+        {
+            get { return prezime; }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    throw new ArgumentNullException("Morate uneti vrednost za prezime!");
+                if (value.Length > 30)
+                    throw new ArgumentException("Prezime je ograniceno na 30 karaktera!");
+                prezime = value; 
+            }
+        }
         /// <summary>
         /// Kilaza klijenta u kg.
         /// </summary>
-        public int Kilaza { get; set; }
+        private int kilaza;
+        public int Kilaza
+        {
+            get { return kilaza; }
+            set
+            {
+                if (value == 0)
+                    throw new ArgumentException("Morate uneti vrednost za kilazu!");
+                kilaza = value; }
+        }
         /// <summary>
         /// Visima klijenta u cm.
         /// </summary>
-        public int Visina { get; set; }
+        private int visina;
+        public int Visina
+        {
+            get { return visina; }
+            set
+            {
+                if (value == 0)
+                    throw new ArgumentException("Morate uneti vrednost za visinu!");
+                visina = value; }
+        }
         /// <summary>
         /// Grupa u kojoj klijent trenira.
         /// </summary>
-        public Grupa? Grupa { get; set; }
+        private Grupa? grupa;
+        public Grupa? Grupa
+        {
+            get { return grupa; }
+            set { grupa = value; }
+        }
         /// <summary>
         /// Id grupe u kojoj klijent trenira.
         /// </summary>
-        public int GrupaID { get; set; }
+        private int grupaID;
+        public int GrupaID
+        {
+            get { return grupaID; }
+            set { grupaID = value; }
+        }
         /// <summary>
         /// Pol klijenta.
         /// </summary>
-        public Pol? Pol { get; set; }
+        private Pol? pol;
+        public Pol? Pol
+        {
+            get { return pol; }
+            set { pol = value; }
+        }
         /// <summary>
         /// Id pola klijenta.
         /// </summary>
-        public int PolID { get; set; }
+        private int polID;
+        public int PolID
+        {
+            get { return polID; }
+            set { polID = value; }
+        }
         /// <summary>
         /// Get metoda koja vraca ime i prezime klijenta kao string.
         /// </summary>

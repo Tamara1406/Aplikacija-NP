@@ -19,10 +19,26 @@ namespace Domen
         /// <summary>
         /// Id pola kao int.
         /// </summary>
-        public int PolID { get; set; }
+        private int polID;
+        public int PolID
+        {
+            get { return polID; }
+            set {
+                if (value == null)
+                    throw new ArgumentNullException("Vrednost ID-ja je null!");
+                polID = value; }
+        }
         /// <summary>
         /// Naziv pola kao string.
         /// </summary>
-        public string PolNaziv { get; set; }
+        private string polNaziv;
+        public string PolNaziv
+        {
+            get { return polNaziv; }
+            set {
+                if (value == null)
+                    throw new ArgumentNullException("Vrednost je null!"); 
+                polNaziv = value; }
+        }
     }
 }

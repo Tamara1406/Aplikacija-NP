@@ -18,10 +18,27 @@ namespace Domen
         /// <summary>
         /// Id mesta kao int.
         /// </summary>
-        public int MestoID { get; set; }
+        private int mestoID;
+        public int MestoID {
+            get { return mestoID; }
+            set {
+                if (value == null)
+                    throw new ArgumentNullException("Vrednost ID-ja je null!");
+                mestoID = value; }
+        }
         /// <summary>
         /// Naziv mesta kao string.
         /// </summary>
-        public string Naziv { get; set; }
+        private string naziv;
+        public string Naziv
+        {
+            get { return naziv; }
+            set {
+                if (value == null|| value.Length == 0)
+                    throw new ArgumentNullException("Morate uneti vrednost za naziv mesta!");
+                if (value.Length > 20)
+                    throw new ArgumentException("Naziv mesta je ogranicen na 20 karaktera!");
+                naziv = value; }
+        }
     }
 }

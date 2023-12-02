@@ -19,12 +19,32 @@ namespace Domen
         /// <summary>
         /// Id obrazovanja kao int.
         /// </summary>
-        public int ObrazovanjeID { get; set; }
+        private int obrazovanjeID;
+        public int ObrazovanjeID
+        {
+            get { return obrazovanjeID; }
+            set {
+                if (value == null)
+                    throw new ArgumentNullException("Vrednost ID-ja je null!");
+                obrazovanjeID = value; }
+        }
         /// <summary>
         /// Stepen obrazovanja kao string.
         /// 
         /// Predstvalja stepen strucne spreme.
         /// </summary>
-        public string StepenObrazovanja { get; set; }
+        private string stepenObrazovanja;
+        public string StepenObrazovanja
+        {
+            get { return stepenObrazovanja; }
+            set 
+            { 
+                if(value == null || value.Length == 0)
+                    throw new ArgumentNullException("Morate uneti vrednost za stepen obrazovanja!");
+                if (value.Length > 20)
+                    throw new ArgumentException("Stepen obrazovanja je ogranicen na 20 karaktera!");
+                stepenObrazovanja = value; 
+            }
+        }
     }
 }

@@ -20,6 +20,17 @@ namespace Domen
         /// <summary>
         /// Ime i prezime User-a.
         /// </summary>
-        public string ImePrezime { get; set; }
+        private string imePrezime;
+        public string ImePrezime
+        {
+            get { return imePrezime; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("Morate uneti vrednost za ime i prezime!");
+                if (value.Length == 0)
+                    throw new ArgumentException("Morate uneti vrednost za ime i prezime!"); 
+                imePrezime = value; }
+        }
     }
 }
