@@ -189,6 +189,13 @@ namespace WebAplikacija.Controllers
         [HttpPost]
         public async Task<IActionResult> Kreiraj(KreirajGrupuViewModel grupa)
         {
+            if (grupa.GrupaIme != null && grupa.GrupaIme.Length > 20)
+            {
+                ModelState.AddModelError("GrupaIme", "Ime grupe mora imati do 20 karaktera");
+                return await Kreiraj();
+            }
+
+
             if (ModelState.IsValid)
             {
                 Grupa g = new Grupa()

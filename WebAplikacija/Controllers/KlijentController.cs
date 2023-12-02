@@ -125,34 +125,48 @@ namespace WebAplikacija.Controllers
         /// <returns>metoda za kreiranje klijenta</returns>
         [HttpPost]
         public async Task<IActionResult> Kreiraj(KreirajKlijentaViewModel klijent)
-        {
-            if (ModelState.IsValid)
-            {
+        { 
                 if (klijent.Kilaza == 0)
                 {
                     ModelState.AddModelError("Kilaza", "Morate uneti kilazu!");
                     return await Kreiraj();
                 }
+
                 if (klijent.Visina == 0)
                 {
                     ModelState.AddModelError("Visina", "Morate uneti visinu!");
                     return await Kreiraj();
                 }
-                Klijent k = new Klijent()
+            
+                if (klijent.Ime != null && klijent.Ime.Length > 20)
                 {
-                    Ime = klijent.Ime,
-                    Prezime = klijent.Prezime,
-                    Kilaza = klijent.Kilaza,
-                    Visina = klijent.Visina,
-                    PolID = klijent.PolID,
-                    GrupaID = klijent.GrupaID
-                };
+                    ModelState.AddModelError("Ime", "Ime mora imati do 20 karaktera");
+                    return await Kreiraj();
+                }
 
 
+                if (klijent.Prezime != null && klijent.Prezime.Length > 30)
+                {
+                    ModelState.AddModelError("Prezime", "Prezime mora imati do 30 karaktera");
+                    return await Kreiraj();
+                }
+                
+            if (ModelState.IsValid)
+            {
+                    
+                    Klijent k = new Klijent()
+                    {
+                        Ime = klijent.Ime,
+                        Prezime = klijent.Prezime,
+                        Kilaza = klijent.Kilaza,
+                        Visina = klijent.Visina,
+                        PolID = klijent.PolID,
+                        GrupaID = klijent.GrupaID
+                    };
                 
                 jedinicaPosla.KlijentRepozitorijum.Dodaj(k);
-                jedinicaPosla.SacuvajPromene();
-                return RedirectToAction("Index");
+                    jedinicaPosla.SacuvajPromene();
+                    return RedirectToAction("Index");
             }
             return await Kreiraj();
         }

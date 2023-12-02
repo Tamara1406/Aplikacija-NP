@@ -121,6 +121,25 @@ namespace WebAplikacija.Controllers
         [HttpPost]
         public async Task<IActionResult> Kreiraj(KreirajTreneraViewModel trener)
         {
+            if (trener.Ime != null && trener.Ime.Length > 20)
+            {
+                ModelState.AddModelError("Ime", "Ime mora imati do 20 karaktera");
+                return await Kreiraj();
+            }
+
+
+            if (trener.Prezime != null && trener.Prezime.Length > 30)
+            {
+                ModelState.AddModelError("Prezime", "Prezime mora imati do 30 karaktera");
+                return await Kreiraj();
+            }
+
+            if (trener.Opis != null && trener.Opis.Length > 30)
+            {
+                ModelState.AddModelError("Opis", "Opis mora imati do 50 karaktera");
+                return await Kreiraj();
+            }
+
             if (ModelState.IsValid)
             {
                 Trener t = new Trener()
