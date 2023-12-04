@@ -10,6 +10,7 @@ using WebAplikacija.Models;
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace WebAplikacija.Controllers
 {
@@ -184,6 +185,7 @@ namespace WebAplikacija.Controllers
             
             Klijent k = jedinicaPosla.KlijentRepozitorijum.Vrati(id);
 
+
             PromeniKlijentaViewModel kl = new PromeniKlijentaViewModel
                 {
                 KlijentID = k.KlijentID,
@@ -250,7 +252,7 @@ namespace WebAplikacija.Controllers
         /// <param name="id">id klijenta koji treba da se obrise</param>
         /// <returns>stranica za brisanje klijenata</returns>
         [Authorize(Roles = "Trener")]
-        public IActionResult Obrisi(int id)
+        public async Task<IActionResult> Obrisi(int id)
         {
             List<ObrisiKlijentaViewModel> list = jedinicaPosla
                 .KlijentRepozitorijum
@@ -283,7 +285,7 @@ namespace WebAplikacija.Controllers
         /// <param name="model">model klijenta koji treba da se obrise</param>
         /// <returns>vraca pocetnu stranicu za prikaz svih klijenata</returns>
         [HttpPost]
-        public IActionResult Obrisi(ObrisiKlijentaViewModel model)
+        public async Task<IActionResult> Obrisi(ObrisiKlijentaViewModel model)
         {
             if (ModelState.IsValid)
             {

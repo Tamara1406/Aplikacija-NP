@@ -136,5 +136,213 @@ namespace Aplikacija.Tests.Controller
             Assert.AreEqual("Prva grupa", model[0].GrupaIme);
             Assert.AreEqual("Druga grupa", model[1].GrupaIme);
         }
+
+        [Fact]
+        public async Task GrupaController_Delete_ReturnSuccess()
+        {
+            // Arrange.
+            var jedinica = A.Fake<IJedinicaPosla>();
+            GrupaController controller = new GrupaController(jedinica);
+
+            var g1 = new Grupa()
+            {
+                GrupaID = 1,
+                GrupaIme = "Prva",
+                TrenerID = 1,
+                Trener = jedinica.TrenerRepozitorijum.Vrati(1),
+                MestoID = 1,
+                Mesto = jedinica.MestoRepozitorijum.Vrati(1)
+            };
+            var g2 = new Grupa()
+            {
+                GrupaID = 2,
+                GrupaIme = "Druga",
+                TrenerID = 1,
+                Trener = jedinica.TrenerRepozitorijum.Vrati(1),
+                MestoID = 1,
+                Mesto = jedinica.MestoRepozitorijum.Vrati(1)
+            };
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g1));
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g2));
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.VratiSve()).Returns(new List<Grupa> { g1, g2 });
+
+            //// Act.
+            var obrisiResult = controller.Obrisi(g1.GrupaID);
+            var obrisiViewResult = obrisiResult as ViewResult;
+            var obrisanaGrupa = obrisiViewResult.Model as ObrisiGrupuViewModel;
+
+            // Assert.
+            obrisiResult.Should().NotBeNull();
+            Assert.AreEqual("Prva", obrisanaGrupa.GrupaIme);
+
+            //// Act.
+            A.CallTo(() => jedinica.GrupaRepozitorijum.VratiSve()).Returns(new List<Grupa> { g2 });
+
+
+            var result = await controller.Index();
+
+            var viewResult = result as ViewResult;
+            var model = viewResult.Model as List<GrupaViewModel>;
+
+
+            // Assert.
+            Assert.AreEqual(1, model.Count);
+            result.Should().NotBeNull();
+            Assert.AreEqual("Druga", model[0].GrupaIme);
+        }
+
+        [Fact]
+        public async Task GrupaController_Delete_Error()
+        {
+            // Arrange.
+            var jedinica = A.Fake<IJedinicaPosla>();
+            GrupaController controller = new GrupaController(jedinica);
+
+            var g1 = new Grupa()
+            {
+                GrupaID = 1,
+                GrupaIme = "Prva",
+                TrenerID = 1,
+                Trener = jedinica.TrenerRepozitorijum.Vrati(1),
+                MestoID = 1,
+                Mesto = jedinica.MestoRepozitorijum.Vrati(1)
+            };
+            var g2 = new Grupa()
+            {
+                GrupaID = 2,
+                GrupaIme = "Druga",
+                TrenerID = 1,
+                Trener = jedinica.TrenerRepozitorijum.Vrati(1),
+                MestoID = 1,
+                Mesto = jedinica.MestoRepozitorijum.Vrati(1)
+            };
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g1));
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g2));
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.VratiSve()).Returns(new List<Grupa> { g1, g2 });
+
+            //// Act.
+
+            // Assert.
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => (Task)controller.Obrisi(3));
+        }
+
+        [Fact]
+        public void GrupaController_Pretrazi_ReturnSuccess()
+        {
+            // Arrange.
+            var jedinica = A.Fake<IJedinicaPosla>();
+            GrupaController controller = new GrupaController(jedinica);
+
+
+            var g1 = new Grupa()
+            {
+                GrupaID = 1,
+                GrupaIme = "Prva",
+                TrenerID = 1,
+                Trener = jedinica.TrenerRepozitorijum.Vrati(1),
+                MestoID = 1,
+                Mesto = new Mesto() { Naziv = "prvo"},
+                
+            };
+            var g2 = new Grupa()
+            {
+                GrupaID = 2,
+                GrupaIme = "Druga",
+                TrenerID = 1,
+                Trener = jedinica.TrenerRepozitorijum.Vrati(1),
+                MestoID = 1,
+                Mesto = new Mesto() { Naziv = "drugo" }
+            };
+            var g3 = new Grupa()
+            {
+                GrupaID = 3,
+                GrupaIme = "Druga 2",
+                TrenerID = 1,
+                Trener = jedinica.TrenerRepozitorijum.Vrati(1),
+                MestoID = 1,
+                Mesto = new Mesto() { Naziv = "drugo" }
+            };
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g1));
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g2));
+
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.VratiSve()).Returns(new List<Grupa> { g1, g2, g3 });
+
+            // Act.
+            // proverava sa Equals
+
+            var result =  controller.Pretrazi("drugo");
+
+            var viewResult = result as ViewResult;
+            var model = viewResult.Model as List<PretraziGrupuViewModel>;
+
+            // Assert.
+            result.Should().NotBeNull();
+            Assert.AreEqual(2, model.Count);
+            Assert.AreEqual("Druga", model[0].GrupaIme);
+            Assert.AreEqual("Druga 2", model[1].GrupaIme);
+        }
+
+        [Fact]
+        public void GrupaController_PretraziTrener_ReturnSuccess()
+        {
+            // Arrange.
+            var jedinica = A.Fake<IJedinicaPosla>();
+            GrupaController controller = new GrupaController(jedinica);
+
+
+            var g1 = new Grupa()
+            {
+                GrupaID = 1,
+                GrupaIme = "Prva",
+                TrenerID = 2,
+                Trener = new Trener() { TrenerID = 2, Ime = "Mika", Prezime = "Mikic"},
+                MestoID = 1,
+                Mesto = new Mesto() { Naziv = "prvo" },
+
+            };
+            var g2 = new Grupa()
+            {
+                GrupaID = 2,
+                GrupaIme = "Druga",
+                TrenerID = 1,
+                Trener = new Trener() { TrenerID = 1, Ime = "Pera", Prezime = "Peric" },
+                MestoID = 1,
+                Mesto = new Mesto() { Naziv = "drugo" }
+            };
+            var g3 = new Grupa()
+            {
+                GrupaID = 3,
+                GrupaIme = "Druga 2",
+                TrenerID = 1,
+                Trener = new Trener() { TrenerID = 1, Ime = "Pera", Prezime = "Peric" },
+                MestoID = 1,
+                Mesto = new Mesto() { Naziv = "trece" }
+            };
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g1));
+            A.CallTo(() => jedinica.GrupaRepozitorijum.Dodaj(g2));
+
+            A.CallTo(() => jedinica.GrupaRepozitorijum.VratiSve()).Returns(new List<Grupa> { g1, g2, g3 });
+
+            // Act.
+            // proverava sa Equals
+
+            var result = controller.PretraziTrener(1);
+
+            var viewResult = result as ViewResult;
+            var model = viewResult.Model as List<PretraziGrupuViewModel>;
+
+            // Assert.
+            result.Should().NotBeNull();
+            Assert.AreEqual(2, model.Count);
+            Assert.AreEqual("Druga", model[0].GrupaIme);
+            Assert.AreEqual("Druga 2", model[1].GrupaIme);
+        }
     }
 }
