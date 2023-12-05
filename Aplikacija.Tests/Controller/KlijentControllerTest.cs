@@ -263,7 +263,7 @@ namespace Aplikacija.Tests.Controller
             //// Act.
 
             // Assert.
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Obrisi(3));
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => controller.Obrisi(3));
         }
 
         [Fact]

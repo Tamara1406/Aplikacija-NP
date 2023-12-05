@@ -20,6 +20,13 @@ namespace Domen
         /// Id pola kao int.
         /// </summary>
         private int polID;
+
+        /// <summary>
+        /// Vraca ili postavlja id pola kao int.
+        /// </summary>
+        /// <param name="value">Novi id pola koji treba postaviti</param>
+        /// <returns>trenutni id pola</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti id pola jednak null</exception>
         public int PolID
         {
             get { return polID; }
@@ -32,6 +39,13 @@ namespace Domen
         /// Naziv pola kao string.
         /// </summary>
         private string polNaziv;
+
+        /// <summary>
+        /// Vraca ili postavlja naziv pola kao string.
+        /// </summary>
+        /// <param name="value">Novi naziv pola koji treba postaviti</param>
+        /// <returns>trenutni naziv pola</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti naziv pola jednak null</exception>
         public string PolNaziv
         {
             get { return polNaziv; }

@@ -20,6 +20,13 @@ namespace Domen
         /// Id obrazovanja kao int.
         /// </summary>
         private int obrazovanjeID;
+
+        /// <summary>
+        /// Vraca ili postavlja id Obrazovanja kao int.
+        /// </summary>
+        /// <param name="value">Novi id obrazovanja koji treba postaviti</param>
+        /// <returns>trenutni id mesta</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti id obrazovanja jednak null</exception>
         public int ObrazovanjeID
         {
             get { return obrazovanjeID; }
@@ -34,6 +41,14 @@ namespace Domen
         /// Predstvalja stepen strucne spreme.
         /// </summary>
         private string stepenObrazovanja;
+
+        /// <summary>
+        /// Vraca ili postavlja stepen obrazovanja kao string.
+        /// </summary>
+        /// <param name="value">Novi stepen obrazovanja koji treba postaviti</param>
+        /// <returns>trenutni stepen obrazovanja</returns>
+        /// <exception cref="ArgumentNullException">ako je unetistepen obrazovanja jednak null ili prazan string</exception>
+        /// <exception cref="ArgumentException">ako uneti string ima vise od 20 karaktera</exception>
         public string StepenObrazovanja
         {
             get { return stepenObrazovanja; }

@@ -19,6 +19,13 @@ namespace Domen
         /// Id mesta kao int.
         /// </summary>
         private int mestoID;
+
+        /// <summary>
+        /// Vraca ili postavlja id mesta kao int.
+        /// </summary>
+        /// <param name="value">Novi id mesta koji treba postaviti</param>
+        /// <returns>trenutni id mesta</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti id mesta jednak null</exception>
         public int MestoID {
             get { return mestoID; }
             set {
@@ -30,6 +37,14 @@ namespace Domen
         /// Naziv mesta kao string.
         /// </summary>
         private string naziv;
+
+        /// <summary>
+        /// Vraca ili postavlja naziv mesta kao string.
+        /// </summary>
+        /// <param name="value">Novi naziv mesta koji treba postaviti</param>
+        /// <returns>trenutni naziv mesta</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti naziv mesta jednak null ili prazan string</exception>
+        /// <exception cref="ArgumentException">ako uneti string ima vise od 20 karaktera</exception>
         public string Naziv
         {
             get { return naziv; }

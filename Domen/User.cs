@@ -21,6 +21,14 @@ namespace Domen
         /// Ime i prezime User-a.
         /// </summary>
         private string imePrezime;
+
+        /// <summary>
+        /// Vraca ili postavlja ime i prezime korisnika kao string.
+        /// </summary>
+        /// <param name="value">Novo ime i prezime korisnika koje treba postaviti</param>
+        /// <returns>trenutno ime i prezime korisnika</returns>
+        /// <exception cref="ArgumentNullException">ako je uneto ime i prezime jednako null</exception>
+        /// <exception cref="ArgumentException">ako je uneto ime i prezime prazan string</exception>
         public string ImePrezime
         {
             get { return imePrezime; }

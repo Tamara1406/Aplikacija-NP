@@ -22,6 +22,13 @@ namespace Domen
         /// Id klijenta koji trenira u teretani.
         /// </summary>
         private int klijentID;
+
+        /// <summary>
+        /// Vraca ili postavlja id klijenta kao int.
+        /// </summary>
+        /// <param name="value">Novi id klijenta koji treba postaviti</param>
+        /// <returns>trenutni id klijenta</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti id klijenta jednak null</exception>
         public int KlijentID
         {
             get { return klijentID; }
@@ -34,6 +41,14 @@ namespace Domen
         /// Ime klijenta koji trenira u teretani.
         /// </summary>
         private string ime;
+
+        /// <summary>
+        /// Vraca ili postavlja ime klijenta kao string.
+        /// </summary>
+        /// <param name="value">Novo ime klijenta koje treba postaviti</param>
+        /// <returns>trenutno ime klijenta</returns>
+        /// <exception cref="ArgumentNullException">ako je uneto ime klijenta jednako null ili prazan string</exception>
+        /// <exception cref="ArgumentException">ako uneti string ima vise od 20 karaktera</exception>
         public string Ime
         {
             get { return ime; }
@@ -50,6 +65,14 @@ namespace Domen
         /// Prezime klijenta koji trenira u teretani.
         /// </summary>
         private string prezime;
+
+        /// <summary>
+        /// Vraca ili postavlja prezime klijenta kao string.
+        /// </summary>
+        /// <param name="value">Novo prezime klijenta koje treba postaviti</param>
+        /// <returns>trenutno prezime klijenta</returns>
+        /// <exception cref="ArgumentNullException">ako je uneto prezime klijneta jednako null ili prazan string</exception>
+        /// <exception cref="ArgumentException">ako uneti string ima vise od 30 karaktera</exception>
         public string Prezime
         {
             get { return prezime; }
@@ -66,6 +89,13 @@ namespace Domen
         /// Kilaza klijenta u kg.
         /// </summary>
         private int kilaza;
+
+        /// <summary>
+        /// Vraca ili postavlja kilazu kao int.
+        /// </summary>
+        /// <param name="value">Nova kilaza klijenta koju treba postaviti</param>
+        /// <returns>trenutna kilaza klijenta</returns>
+        /// <exception cref="ArgumentException">ako je uneta kilaza klijenta jednaka null</exception>
         public int Kilaza
         {
             get { return kilaza; }
@@ -79,6 +109,13 @@ namespace Domen
         /// Visima klijenta u cm.
         /// </summary>
         private int visina;
+
+        /// <summary>
+        /// Vraca ili postavlja visinu kao int.
+        /// </summary>
+        /// <param name="value">Nova visina klijenta koju treba postaviti</param>
+        /// <returns>trenutna visina klijenta</returns>
+        /// <exception cref="ArgumentException">ako je uneta visina klijenta jednaka null</exception>
         public int Visina
         {
             get { return visina; }
@@ -92,6 +129,12 @@ namespace Domen
         /// Grupa u kojoj klijent trenira.
         /// </summary>
         private Grupa? grupa;
+
+        /// <summary>
+        /// Vraca ili postavlja grupu u kojoj klijent trenira.
+        /// </summary>
+        /// <param name="value">Nova grupa klijenta koju treba postaviti</param>
+        /// <returns>trenutna grupa klijenta</returns>
         public Grupa? Grupa
         {
             get { return grupa; }
@@ -101,6 +144,12 @@ namespace Domen
         /// Id grupe u kojoj klijent trenira.
         /// </summary>
         private int grupaID;
+
+        /// <summary>
+        /// Vraca ili postavlja id grupe u kojoj klijent trenira.
+        /// </summary>
+        /// <param name="value">Novi id grupe koji treba postaviti</param>
+        /// <returns>trenutni id grupe u kojoj klijent trenira</returns>
         public int GrupaID
         {
             get { return grupaID; }
@@ -110,6 +159,12 @@ namespace Domen
         /// Pol klijenta.
         /// </summary>
         private Pol? pol;
+
+        /// <summary>
+        /// Vraca ili postavlja pol klijenta.
+        /// </summary>
+        /// <param name="value">Novi pol klijenta koji treba postaviti</param>
+        /// <returns>trenutni pol klijenta</returns>
         public Pol? Pol
         {
             get { return pol; }
@@ -119,6 +174,12 @@ namespace Domen
         /// Id pola klijenta.
         /// </summary>
         private int polID;
+
+        /// <summary>
+        /// Vraca ili postavlja id pola klijenta.
+        /// </summary>
+        /// <param name="value">Novi id pola koji treba postaviti</param>
+        /// <returns>trenutni id pola klijenta</returns>
         public int PolID
         {
             get { return polID; }

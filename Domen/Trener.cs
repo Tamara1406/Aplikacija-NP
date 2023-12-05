@@ -20,6 +20,13 @@ namespace Domen
         /// Id trenera kao int.
         /// </summary>
         private int trenerID;
+
+        /// <summary>
+        /// Vraca ili postavlja id trenera kao int.
+        /// </summary>
+        /// <param name="value">Novi id trenera koji treba postaviti</param>
+        /// <returns>trenutni id trenera</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti id trenera jednak null</exception>
         public int TrenerID
         {
             get { return trenerID; }
@@ -33,6 +40,14 @@ namespace Domen
         /// Ime trenera kao string.
         /// </summary>
         private string ime;
+
+        /// <summary>
+        /// Vraca ili postavlja ime trenera kao string.
+        /// </summary>
+        /// <param name="value">Novo ime trenera koje treba postaviti</param>
+        /// <returns>trenutno ime trenera</returns>
+        /// <exception cref="ArgumentNullException">ako je uneto ime trenera jednako null ili prazan string</exception>
+        /// <exception cref="ArgumentException">ako uneti string ima vise od 20 karaktera</exception>
         public string Ime
         {
             get { return ime; }
@@ -48,6 +63,14 @@ namespace Domen
         /// Prezime treneras kao string.
         /// </summary>
         private string prezime;
+
+        /// <summary>
+        /// Vraca ili postavlja prezime trenera kao string.
+        /// </summary>
+        /// <param name="value">Novo prezime trenera koje treba postaviti</param>
+        /// <returns>trenutno prezime trenera</returns>
+        /// <exception cref="ArgumentNullException">ako je uneto prezime trenera jednako null ili prazan string</exception>
+        /// <exception cref="ArgumentException">ako uneti string ima vise od 30 karaktera</exception>
         public string Prezime
         {
             get { return prezime; }
@@ -63,6 +86,14 @@ namespace Domen
         /// Obrazovanje trenera koji radi u teretani.
         /// </summary>
         private Obrazovanje obrazovanje;
+
+        /// <summary>
+        /// Vraca ili postavlja obrazovanje trenera.
+        /// </summary>
+        /// <param name="value">Novo obrazovanje trenera koje treba postaviti</param>
+        /// <returns>trenutno obrazovanje trenera</returns>
+        /// <exception cref="ArgumentNullException">ako je uneto obrazovanje trenera jednako null</exception>
+
         public Obrazovanje Obrazovanje
         {
             get { return obrazovanje; }
@@ -76,6 +107,12 @@ namespace Domen
         /// Id obrazovanja trenera.
         /// </summary>
         private int obrazovanjeID;
+
+        /// <summary>
+        /// Vraca ili postavlja id obrazovanja trenera kao int.
+        /// </summary>
+        /// <param name="value">Novi id obrazovanja koji treba postaviti</param>
+        /// <returns>trenutni id obrazovanja trenera</returns>
         public int ObrazovanjeID
         {
             get { return obrazovanjeID; }
@@ -92,6 +129,14 @@ namespace Domen
         /// Opis trenera kao string.
         /// </summary>
         private string opis;
+
+        /// <summary>
+        /// Vraca ili postavlja opis trenera kao string.
+        /// </summary>
+        /// <param name="value">Novi opis trenera koji treba postaviti</param>
+        /// <returns>trenutni opis trenera</returns>
+        /// <exception cref="ArgumentNullException">ako je uneti opis trenera jednak null ili prazan string</exception>
+        /// <exception cref="ArgumentException">ako uneti string ima vise od 50 karaktera</exception>
         public string Opis
         {
             get { return opis; }
@@ -107,6 +152,12 @@ namespace Domen
         /// Slika trenera kao string koji sadrzi adresu slike.
         /// </summary>
         private string? slika;
+
+        /// <summary>
+        /// Vraca ili postavlja sliku trenera kao string.
+        /// </summary>
+        /// <param name="value">Nova slika trenera koju treba postaviti</param>
+        /// <returns>trenutna slika trenera</returns>
         public string? Slika
         {
             get { return slika; }
