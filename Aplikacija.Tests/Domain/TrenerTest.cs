@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WebAplikacija.Controllers;
 using WebAplikacija.Models;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Domen;
 
 namespace Aplikacija.Tests.Domain
 {
@@ -29,16 +30,22 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             TrenerController controller = new TrenerController(jedinica);
-            KreirajTreneraViewModel model = new KreirajTreneraViewModel()
+            try
             {
-                Prezime = "Peric",
-                ObrazovanjeID = 1,
-                Opis = "Ovo je trener",
-                Slika = "slika"
-            };
-            // Act
-            // Assert
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Kreiraj(model), "Morate uneti vrednost za ime!");
+                Trener model = new Trener()
+                {
+                    Ime = null,
+                    Prezime = "Peric",
+                    ObrazovanjeID = 1,
+                    Opis = "Ovo je trener",
+                    Slika = "slika"
+                }; 
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("Value cannot be null. (Parameter 'Morate uneti vrednost za ime!')", ex.Message);
+            }
         }
 
         [Fact]
@@ -46,26 +53,23 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             TrenerController controller = new TrenerController(jedinica);
-            KreirajTreneraViewModel model = new KreirajTreneraViewModel()
+            
+            try
             {
-                Ime = "Peraaaaaaaaaaaaaaaaaa",
-                Prezime = "Peric",
-                ObrazovanjeID = 1,
-                Opis = "Ovo je trener",
-                Slika = "slika"
-            };
-
-            // Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("Ime");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Ime mora imati do 20 karaktera", errorMessage);
-
+                Trener model = new Trener()
+                {
+                    Ime = "Peraaaaaaaaaaaaaaaaaa",
+                    Prezime = "Peric",
+                    ObrazovanjeID = 1,
+                    Opis = "Ovo je trener",
+                    Slika = "slika"
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Ime je ograniceno na 20 karaktera!", ex.Message);
+            }
         }
 
         [Fact]
@@ -74,16 +78,22 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             TrenerController controller = new TrenerController(jedinica);
-            KreirajTreneraViewModel model = new KreirajTreneraViewModel()
+             try
             {
-                Ime = "Pera",
-                ObrazovanjeID = 1,
-                Opis = "Ovo je trener",
-                Slika = "slika"
-            };
-            // Act
-            // Assert
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Kreiraj(model));
+                Trener model = new Trener()
+                {
+                    Ime = "Pera",
+                    Prezime = null,
+                    ObrazovanjeID = 1,
+                    Opis = "Ovo je trener",
+                    Slika = "slika"
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("Value cannot be null. (Parameter 'Morate uneti vrednost za prezime!')", ex.Message);
+            }
         }
 
         [Fact]
@@ -91,26 +101,22 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             TrenerController controller = new TrenerController(jedinica);
-            KreirajTreneraViewModel model = new KreirajTreneraViewModel()
+            try
             {
-                Ime = "Pera",
-                Prezime = "Pericccccccccccccccccccccccccccccc",
-                ObrazovanjeID = 1,
-                Opis = "Ovo je trener",
-                Slika = "slika"
-            };
-
-            // Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("Prezime");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Prezime mora imati do 30 karaktera", errorMessage);
-
+                Trener model = new Trener()
+                {
+                    Ime = "Pera",
+                    Prezime = "Pericccccccccccccccccccccccccccccc",
+                    ObrazovanjeID = 1,
+                    Opis = "Ovo je trener",
+                    Slika = "slika"
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Prezime je ograniceno na 30 karaktera!", ex.Message);
+            }
         }
 
         [Fact]
@@ -119,16 +125,22 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             TrenerController controller = new TrenerController(jedinica);
-            KreirajTreneraViewModel model = new KreirajTreneraViewModel()
+            try
             {
-                Ime = "Pera",
-                Prezime = "Peric",
-                ObrazovanjeID = 1,
-                Slika = "slika"
-            };
-            // Act
-            // Assert
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Kreiraj(model));
+                Trener model = new Trener()
+                {
+                    Ime = "Pera",
+                    Prezime = "Peric",
+                    ObrazovanjeID = 1,
+                    Opis = null,
+                    Slika = "slika"
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("Value cannot be null. (Parameter 'Morate uneti opis!')", ex.Message);
+            }
         }
 
         [Fact]
@@ -136,25 +148,23 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             TrenerController controller = new TrenerController(jedinica);
-            KreirajTreneraViewModel model = new KreirajTreneraViewModel()
+            
+            try
             {
-                Ime = "Pera",
-                Prezime = "Peric",
-                ObrazovanjeID = 1,
-                Opis = "Ovo je treneraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                Slika = "slika"
-            };
-
-            // Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("Opis");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Opis mora imati do 50 karaktera", errorMessage);
+                Trener model = new Trener()
+                {
+                    Ime = "Pera",
+                    Prezime = "Peric",
+                    ObrazovanjeID = 1,
+                    Opis = "Ovo je treneraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    Slika = "slika"
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Opis je ogranicen na 50 karaktera!", ex.Message);
+            }
 
         }
     }

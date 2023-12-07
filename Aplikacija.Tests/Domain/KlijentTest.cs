@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WebAplikacija.Controllers;
 using WebAplikacija.Models;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Domen;
 
 namespace Aplikacija.Tests.Domain
 {
@@ -29,18 +30,24 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             KlijentController controller = new KlijentController(jedinica);
-            KreirajKlijentaViewModel model = new KreirajKlijentaViewModel()
+
+            try
             {
-                Ime = null,
-                Prezime = "Peric",
-                Kilaza = 90,
-                Visina = 185,
-                PolID = 1,
-                GrupaID = 1
-            };
-            // Act
-            // Assert
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Kreiraj(model), "Morate uneti vrednost za ime!");
+                Klijent model = new Klijent()
+                {
+                    Ime = null,
+                    Prezime = "Peric",
+                    Kilaza = 90,
+                    Visina = 185,
+                    PolID = 1,
+                    GrupaID = 1
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("Value cannot be null. (Parameter 'Morate uneti vrednost za ime!')", ex.Message);
+            }
         }
 
         [Fact]
@@ -48,26 +55,24 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             KlijentController controller = new KlijentController(jedinica);
-            KreirajKlijentaViewModel model = new KreirajKlijentaViewModel()
+            try
             {
-                Ime = "Peraaaaaaaaaaaaaaaaaa",
-                Prezime = "Periccc",
-                Kilaza = 90,
-                Visina = 185,
-                PolID = 1,
-                GrupaID = 1
-            };
+                Klijent model = new Klijent()
+                {
+                    Ime = "Peraaaaaaaaaaaaaaaaaa",
+                    Prezime = "Periccc",
+                    Kilaza = 90,
+                    Visina = 185,
+                    PolID = 1,
+                    GrupaID = 1
+                }; 
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Ime je ograniceno na 20 karaktera!", ex.Message);
 
-            // Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("Ime");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Ime mora imati do 20 karaktera", errorMessage);
+            }
 
         }
 
@@ -77,18 +82,23 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             KlijentController controller = new KlijentController(jedinica);
-            KreirajKlijentaViewModel model = new KreirajKlijentaViewModel()
+            try
             {
-                Ime = "Pera",
-                Prezime = null,
-                Kilaza = 90,
-                Visina = 185,
-                PolID = 1,
-                GrupaID = 1
-            };
-            // Act
-            // Assert
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Kreiraj(model));
+                Klijent model = new Klijent()
+                {
+                    Ime = "Pera",
+                    Prezime = null,
+                    Kilaza = 90,
+                    Visina = 185,
+                    PolID = 1,
+                    GrupaID = 1
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("Value cannot be null. (Parameter 'Morate uneti vrednost za prezime!')", ex.Message);
+            }
         }
 
         [Fact]
@@ -96,27 +106,24 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             KlijentController controller = new KlijentController(jedinica);
-            KreirajKlijentaViewModel model = new KreirajKlijentaViewModel()
+            try
             {
-                Ime = "Pera",
-                Prezime = "Pericccccccccccccccccccccccccccccc",
-                Kilaza = 90,
-                Visina = 185,
-                PolID = 1,
-                GrupaID = 1
-            };
+                Klijent model = new Klijent()
+                {
+                    Ime = "Pera",
+                    Prezime = "Pericccccccccccccccccccccccccccccc",
+                    Kilaza = 90,
+                    Visina = 185,
+                    PolID = 1,
+                    GrupaID = 1
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Prezime je ograniceno na 30 karaktera!", ex.Message);
 
-            // Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("Prezime");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Prezime mora imati do 30 karaktera", errorMessage);
-
+            }
         }
 
         [Fact]
@@ -124,26 +131,23 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             KlijentController controller = new KlijentController(jedinica);
-            KreirajKlijentaViewModel model = new KreirajKlijentaViewModel()
+            try
             {
-                Ime = "Pera",
-                Prezime = "Peric",
-                Kilaza = 0,
-                Visina = 185,
-                PolID = 1,
-                GrupaID = 1
-            };
-
-            // Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("Kilaza");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Morate uneti kilazu!", errorMessage);
+                Klijent model = new Klijent()
+                {
+                    Ime = "Pera",
+                    Prezime = "Peric",
+                    Kilaza = 0,
+                    Visina = 185,
+                    PolID = 1,
+                    GrupaID = 1
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Morate uneti vrednost za kilazu!", ex.Message);
+            }
 
         }
 
@@ -152,27 +156,25 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             KlijentController controller = new KlijentController(jedinica);
-            KreirajKlijentaViewModel model = new KreirajKlijentaViewModel()
+            
+            try
             {
-                Ime = "Pera",
-                Prezime = "Peric",
-                Kilaza = 90,
-                Visina = 0,
-                PolID = 1,
-                GrupaID = 1
-            };
+                Klijent model = new Klijent()
+                {
+                    Ime = "Pera",
+                    Prezime = "Peric",
+                    Kilaza = 90,
+                    Visina = 0,
+                    PolID = 1,
+                    GrupaID = 1
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Morate uneti vrednost za visinu!", ex.Message);
 
-            // Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("Visina");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Morate uneti visinu!", errorMessage);
-
+            }
         }
     }
 }

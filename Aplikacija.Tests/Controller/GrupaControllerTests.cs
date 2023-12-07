@@ -344,5 +344,45 @@ namespace Aplikacija.Tests.Controller
             Assert.AreEqual("Druga", model[0].GrupaIme);
             Assert.AreEqual("Druga 2", model[1].GrupaIme);
         }
+
+        [Fact]
+        public async Task GrupaController_Kreiraj_ImeNullException()
+        {
+            // Arrange
+            GrupaController controller = new GrupaController(jedinica);
+            KreirajGrupuViewModel model = new KreirajGrupuViewModel()
+            {
+                GrupaIme = null,
+                TrenerID = 1,
+                MestoID = 1,
+            };
+            // Act
+            // Assert
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Kreiraj(model));
+        }
+
+        [Fact]
+        public void GrupaController_Kreiraj_ImeOgranicenjeException()
+        {
+            // Arrange
+            GrupaController controller = new GrupaController(jedinica);
+            KreirajGrupuViewModel model = new KreirajGrupuViewModel()
+            {
+                GrupaIme = "Tstststatatatatatatata",
+                TrenerID = 1,
+                MestoID = 1,
+            };
+
+            //Act
+            var result = controller.Kreiraj(model);
+            var modelState = controller.ModelState;
+
+            // Assert
+            var modelStateEntry = modelState.GetValueOrDefault("GrupaIme");
+            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
+
+
+            Assert.AreEqual("Ime grupe mora imati do 20 karaktera", errorMessage);
+        }
     }
 }

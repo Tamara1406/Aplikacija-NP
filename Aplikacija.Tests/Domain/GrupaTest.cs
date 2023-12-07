@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using WebAplikacija.Controllers;
 using WebAplikacija.Models;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Domen;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Aplikacija.Tests.Domain
 {
@@ -24,19 +26,26 @@ namespace Aplikacija.Tests.Domain
         }
 
         [Fact]
-        public async Task GrupaController_Kreiraj_ImeNullException()
+        public void GrupaController_Kreiraj_ImeNullException()
         {
             // Arrange
             GrupaController controller = new GrupaController(jedinica);
-            KreirajGrupuViewModel model = new KreirajGrupuViewModel()
-            {
-                GrupaIme = null,
-                TrenerID = 1,
-                MestoID = 1,
-            };
+            
             // Act
-            // Assert
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => controller.Kreiraj(model));
+            try
+            {
+                Grupa grupa = new Grupa()
+                {
+                    GrupaIme = null,
+                    TrenerID = 1,
+                    MestoID = 1,
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("Value cannot be null. (Parameter 'Morate uneti vrednost za ime!')", ex.Message);
+            }
         }
 
         [Fact]
@@ -44,23 +53,23 @@ namespace Aplikacija.Tests.Domain
         {
             // Arrange
             GrupaController controller = new GrupaController(jedinica);
-            KreirajGrupuViewModel model = new KreirajGrupuViewModel()
-            {
-                GrupaIme = "Tstststatatatatatatata",
-                TrenerID = 1,
-                MestoID = 1,
-            };
+            
 
             //Act
-            var result = controller.Kreiraj(model);
-            var modelState = controller.ModelState;
-
-            // Assert
-            var modelStateEntry = modelState.GetValueOrDefault("GrupaIme");
-            var errorMessage = modelStateEntry.Errors[0].ErrorMessage;
-
-
-            Assert.AreEqual("Ime grupe mora imati do 20 karaktera", errorMessage);
+            try
+            {
+                Grupa grupa = new Grupa()
+                {
+                    GrupaIme = "Tstststatatatatatatata",
+                    TrenerID = 1,
+                    MestoID = 1,
+                };
+                Assert.IsTrue(false, "Expected exception, but none was thrown.");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("Ime je ograniceno na 20 karaktera!", ex.Message);
+            }
         }
     }
 }
